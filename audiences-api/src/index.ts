@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { clear, get, on, runDetection, runHandlers } from "./implementation";
+import { clear, get, on, runDetection, runHandlers } from './implementation';
 
 // Rules JSON API
 
@@ -17,7 +17,7 @@ export interface Segment {
   retention: Retention;
 }
 
-export type Retention = "PAGE" | "SESSION";
+export type Retention = 'PAGE' | 'SESSION';
 
 export interface Rule {
   attr: Attribute;
@@ -25,8 +25,8 @@ export interface Rule {
   val: any;
 }
 
-export type Attribute = "browser_language" | "local_hour" | "referrer";
-export type Operator = "between" | "eq" | "matches";
+export type Attribute = 'browser_language' | 'local_hour' | 'referrer';
+export type Operator = 'between' | 'eq' | 'matches';
 
 // Executable API
 

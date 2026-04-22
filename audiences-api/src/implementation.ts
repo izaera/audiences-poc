@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { Detection } from "./detection";
-import { Store } from "./store";
+import { Detection } from './detection';
+import { Store } from './store';
 
-import type { Handler, Rules } from "./index";
+import type { Handler, Rules } from './index';
 
 interface HandlersMap {
   [segmentId: string]: Handler[];
 }
 
-console.log("Loading Liferay Audiences API v0.1.0...");
+console.log('Loading Liferay Audiences API v0.1.0...');
 
 let handlers: HandlersMap = {};
 let store = new Store();
@@ -49,12 +49,12 @@ export async function runDetection(rulesURL: string): Promise<void> {
 
   for (const match of matches) {
     switch (match.retention) {
-      case "PAGE": {
+      case 'PAGE': {
         pageSegmentIds.add(match.id);
         break;
       }
 
-      case "SESSION": {
+      case 'SESSION': {
         sessionSegmentIds.add(match.id);
         break;
       }
@@ -71,7 +71,7 @@ export async function runDetection(rulesURL: string): Promise<void> {
 
 export function on(segment: string, handler: Handler): void {
   console.log(
-    "segments:",
+    'segments:',
     `adding handler ${handler} for segment '${segment}'`,
   );
 

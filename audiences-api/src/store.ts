@@ -1,5 +1,5 @@
-const SESSION_STORAGE_KEY = "com.liferay.segments";
-const SESSION_SEGMENTS_SEPARATOR = "|";
+const SESSION_STORAGE_KEY = 'com.liferay.segments';
+const SESSION_SEGMENTS_SEPARATOR = '|';
 
 export class Store {
   private pageSegmentIds: Set<string> = new Set();

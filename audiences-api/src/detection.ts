@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import type { Attribute, Operator, Retention, Rules } from "./index";
+import type { Attribute, Operator, Retention, Rules } from './index';
 
 export interface SegmentMatch {
   id: string;
@@ -47,15 +47,15 @@ interface OperatorImpl {
 
 async function getAttribute(attr: Attribute): Promise<any> {
   switch (attr) {
-    case "browser_language": {
+    case 'browser_language': {
       return navigator.language;
     }
 
-    case "local_hour": {
+    case 'local_hour': {
       return new Date().getHours();
     }
 
-    case "referrer": {
+    case 'referrer': {
       return document.referrer;
     }
 
@@ -67,19 +67,19 @@ async function getAttribute(attr: Attribute): Promise<any> {
 
 function getOperator(op: Operator): OperatorImpl {
   switch (op) {
-    case "between": {
+    case 'between': {
       return (value: number, expected: [number, number]): boolean => {
         return value >= expected[0] && value <= expected[1];
       };
     }
 
-    case "eq": {
+    case 'eq': {
       return (value: any, expected: any): boolean => {
         return value === expected;
       };
     }
 
-    case "matches": {
+    case 'matches': {
       return (value: string, expected: string): boolean => {
         return new RegExp(expected).test(value);
       };
