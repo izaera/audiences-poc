@@ -1,0 +1,11 @@
+{
+  "name": "rules",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "serve src -l 8001 --cors"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

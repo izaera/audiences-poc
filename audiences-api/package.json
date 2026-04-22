@@ -1,0 +1,20 @@
+{
+  "name": "audiences-api",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "npm run lint && esbuild src/index.ts --bundle --outfile=dist/audiences-api.js --format=esm --platform=browser --sourcemap",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tsc --noEmit",
+    "serve": "npm run build && concurrently -k -n esbuild,serve -c cyan,green \"esbuild src/index.ts --bundle --outfile=dist/audiences-api.js --format=esm --platform=browser --sourcemap --watch\" \"serve dist -l 8000 --cors --no-clipboard\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "esbuild": "^0.24.0",
+    "prettier": "^3.3.3",
+    "serve": "^14.2.4",
+    "typescript": "^5.6.0"
+  }
+}

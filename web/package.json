@@ -1,0 +1,11 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "serve src -l 8002 --cors"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

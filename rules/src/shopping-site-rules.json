@@ -1,0 +1,13 @@
+{
+	"segments": [
+		{
+			"id": "entered_shopping_site_from_google",
+			"rule": {
+				"attr": "referrer",
+				"op": "matches",
+				"val": ".*/external/google.*"
+			},
+			"retention": "SESSION"
+		}
+	]
+}
