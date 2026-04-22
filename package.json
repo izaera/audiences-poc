@@ -7,6 +7,7 @@
     "rules"
   ],
   "scripts": {
+    "format": "npm run format -w audiences-api && npm run format -w web",
     "serve": "concurrently -k -n audiences-api,rules,web -c cyan,green,magenta \"npm run serve -w audiences-api\" \"npm run serve -w rules\" \"npm run serve -w web\""
   },
   "devDependencies": {
