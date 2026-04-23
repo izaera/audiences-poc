@@ -6,36 +6,93 @@ window.debug = {
   clear: () => segments.clear(),
 };
 
-// We define the page as the first portion in the URL. This is
-// completely at user's will. It is not required by the
-// framework.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// FIND WHAT RULES TO APPLY PHASE
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// We define the page as the first portion in the URL. This is completely at user's will. It is not
+// required by the framework.
 function getSite() {
   return (
     document.location.pathname.split('/').filter(Boolean)[0] || 'home-site'
   );
 }
-console.log(`Current site is '${getSite()}'`);
 
-// We define the page as the second portion in the URL. This is
-// completely at user's will. It is not required by the
-// framework.
+// We define the page as the second portion in the URL. This is completely at user's will. It is not
+// required by the framework.
 function getPage() {
   return document.location.pathname.split('/').filter(Boolean)[1] || 'home';
 }
-console.log(`Current page is '${getPage()}'`);
 
-// We retrieve the URLs of the rules.json files from a remote
-// server. This is completely at user's will. The framework
-// doesn't impose any restriction on the origin of the URLs.
+// We retrieve the URLs of the rules.json files from a remote server. This is completely at user's
+// will. The framework doesn't impose any restriction on the origin of the URLs.
 import { ruleURLs } from 'http://localhost:8001/rule-urls.js';
 
-// We apply rules for site and (site, page). Again, the framework
-// doesn't impose any restriction on what rules to apply.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// APPLY RULES (DETECTION) PHASE
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+console.log(`Current site is '${getSite()}'`);
+console.log(`Current page is '${getPage()}'`);
+
+// We apply rules for site and (site, page). Again, the framework doesn't impose any restriction on
+// what rules to apply.
 for (let key of [`${getSite()}`, `${getSite()}/${getPage()}`]) {
   const url = ruleURLs[key];
 
   console.log(`Running detection rules '${url}'...`);
+
   await segments.runDetection(url);
 }
 
-// Now we register the personalizations.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// REGISTER PERSONALIZATION HANDLERS PHASE
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+console.log(`Registering personalization handlers...`);
+
+segments.on('spanish_language', function showSpanishLanguageHint() {
+  const div = document.getElementById('language-hint');
+
+  if (!div) return;
+
+  div.innerHTML = `
+¡Vemos que habla español! ¿Desea ver la web en su idioma?
+  `;
+});
+
+segments.on('entered_shopping_site_from_google', function showOfferOfTheDay() {
+  const div = document.getElementById('shopping-hint');
+
+  if (!div) return;
+
+  div.innerHTML = `
+Limited offer of the day: Pro subscription for half its price (that's 6€) during one year!
+`;
+});
+
+segments.on('entered_legal_site_from_google', function showLeaveReviewPrompt() {
+  const div = document.getElementById('legal-hint');
+
+  if (!div) return;
+
+  div.innerHTML = `
+Hey! Good morning! Do you think you could leave a 5 start review in Google for our site?
+We are running out of money... 😔
+`;
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// RUN PERSONALIZATION HANDLERS PHASE
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////
+console.log(`Running personalization handlers...`);
+
+await segments.runHandlers();

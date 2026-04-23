@@ -31,6 +31,7 @@ export type Operator = 'between' | 'eq' | 'matches';
 // Executable API
 
 export interface Handler {
+  name: string | undefined;
   (): Promise<void> | void;
 }
 
@@ -38,7 +39,7 @@ export interface SegmentsAPI {
   clear(): void;
   get(): Set<string>;
   runDetection(rulesURL: string): Promise<void>;
-  on(segment: string, handler: Handler): void;
+  on(segmentId: string, handler: Handler): void;
   runHandlers(): Promise<void>;
 }
 

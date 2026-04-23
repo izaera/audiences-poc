@@ -359,6 +359,37 @@ button.cta {
 	font-size: 0.95rem;
 }
 
+/* Audience hints */
+
+#language-hint,
+#shopping-hint,
+#legal-hint {
+	text-align: center;
+	padding: 0.6rem 1rem;
+	font-weight: 600;
+	color: #fff;
+	letter-spacing: 0.02em;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+#language-hint:empty,
+#shopping-hint:empty,
+#legal-hint:empty {
+	display: none;
+}
+
+#language-hint {
+	background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+}
+
+#shopping-hint {
+	background: linear-gradient(90deg, #00c9a7, #1fa2ff);
+}
+
+#legal-hint {
+	background: linear-gradient(90deg, #8e2de2, #4a00e0);
+}
+
 /* Footer */
 
 .site-footer {
