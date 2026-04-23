@@ -4,14 +4,13 @@
  */
 
 import type { Attribute, Operator, Retention, Rules } from './index';
+import { store } from './store';
 
 export interface SegmentMatch {
   id: string;
   retention: Retention;
 }
 
-// TODO: attr referrer
-// TODO: op matches
 export class Detection {
   private _rules: Rules;
 
@@ -45,8 +44,14 @@ interface OperatorImpl {
   (actual: any, expected: any): boolean;
 }
 
+// TODO: meta attribute to infer PAGE segments from SESSION segments
+// TODO: implement custom attributes
 async function getAttribute(attr: Attribute): Promise<any> {
   switch (attr) {
+    case 'audiences': {
+      return store.getSegmentIds();
+    }
+
     case 'browser_language': {
       return navigator.language;
     }
@@ -65,6 +70,7 @@ async function getAttribute(attr: Attribute): Promise<any> {
   }
 }
 
+// TODO: implement custom operators
 function getOperator(op: Operator): OperatorImpl {
   switch (op) {
     case 'between': {
@@ -76,6 +82,12 @@ function getOperator(op: Operator): OperatorImpl {
     case 'eq': {
       return (value: any, expected: any): boolean => {
         return value === expected;
+      };
+    }
+
+    case 'include': {
+      return (value: Set<string>, expected: string): boolean => {
+        return value.has(expected);
       };
     }
 

@@ -5,7 +5,7 @@
 
 import { Detection } from './detection';
 import { log } from './log';
-import { Store } from './store';
+import { store } from './store';
 
 import type { Handler, Rules } from './index';
 
@@ -16,24 +16,13 @@ interface HandlersMap {
 log('Loading Liferay Audiences API v0.1.0...');
 
 let handlers: HandlersMap = {};
-let store = new Store();
 
 export function clear(): void {
   store.clear();
 }
 
 export function get(): Set<string> {
-  const set: Set<string> = new Set();
-
-  for (const segmentId of store.getSessionSegmentIds()) {
-    set.add(segmentId);
-  }
-
-  for (const segmentId of store.getPageSegmentIds()) {
-    set.add(segmentId);
-  }
-
-  return set;
+  return store.getSegmentIds();
 }
 
 export async function runDetection(rulesURL: string): Promise<void> {
@@ -86,6 +75,10 @@ export async function runHandlers(): Promise<void> {
   const segmentIds = get();
 
   for (const segmentId of segmentIds) {
+    if (!handlers[segmentId]) {
+      continue;
+    }
+
     for (const handler of handlers[segmentId]) {
       log(
         `Running handler '${handler.name ?? 'anonymous'}' for segment '${segmentId}'`,

@@ -1,12 +1,26 @@
 const SESSION_STORAGE_KEY = 'com.liferay.segments';
 const SESSION_SEGMENTS_SEPARATOR = '|';
 
-export class Store {
+class Store {
   private pageSegmentIds: Set<string> = new Set();
 
   clear(): void {
     this.pageSegmentIds = new Set();
     localStorage.removeItem(SESSION_STORAGE_KEY);
+  }
+
+  getSegmentIds(): Set<string> {
+    const set: Set<string> = new Set();
+
+    for (const segmentId of this.getSessionSegmentIds()) {
+      set.add(segmentId);
+    }
+
+    for (const segmentId of this.getPageSegmentIds()) {
+      set.add(segmentId);
+    }
+
+    return set;
   }
 
   getPageSegmentIds(): Set<string> {
@@ -34,3 +48,5 @@ export class Store {
     );
   }
 }
+
+export const store = new Store();

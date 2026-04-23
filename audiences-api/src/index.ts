@@ -25,8 +25,12 @@ export interface Rule {
   val: any;
 }
 
-export type Attribute = 'browser_language' | 'local_hour' | 'referrer';
-export type Operator = 'between' | 'eq' | 'matches';
+export type Attribute =
+  | 'audiences'
+  | 'browser_language'
+  | 'local_hour'
+  | 'referrer';
+export type Operator = 'between' | 'eq' | 'include' | 'matches';
 
 // Executable API
 
