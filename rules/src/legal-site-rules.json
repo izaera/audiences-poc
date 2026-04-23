@@ -8,6 +8,15 @@
 				"val": ".*/external/google.*"
 			},
 			"retention": "SESSION"
+		},
+		{
+			"id": "eligible_for_review",
+			"rule": {
+				"attr": "audiences",
+				"op": "include",
+				"val": "entered_legal_site_from_google"
+			},
+			"retention": "PAGE"
 		}
 	]
 }

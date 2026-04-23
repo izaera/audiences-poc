@@ -67,7 +67,7 @@ segments.on('spanish_language', function showSpanishLanguageHint() {
   `;
 });
 
-segments.on('entered_shopping_site_from_google', function showOfferOfTheDay() {
+segments.on('eligible_for_day_offer', function showOfferOfTheDay() {
   const div = document.getElementById('shopping-hint');
 
   if (!div) return;
@@ -77,7 +77,7 @@ Limited offer of the day: Pro subscription for half its price (that's 6€) duri
 `;
 });
 
-segments.on('entered_legal_site_from_google', function showLeaveReviewPrompt() {
+segments.on('eligible_for_review', function showLeaveReviewPrompt() {
   const div = document.getElementById('legal-hint');
 
   if (!div) return;

@@ -1,4 +1,14 @@
 {
-	"segments": []
+	"segments": [
+		{
+			"id": "eligible_for_day_offer",
+			"rule": {
+				"attr": "audiences",
+				"op": "include",
+				"val": "entered_shopping_site_from_google"
+			},
+			"retention": "PAGE"
+		}
+	]
 }
 
