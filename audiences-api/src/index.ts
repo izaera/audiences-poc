@@ -44,6 +44,7 @@ export type Attribute =
   | 'hostname'
   | 'local_date'
   | 'local_hour'
+  | 'pathname'
   | 'referrer'
   | `search_param:${string}`
   | 'url';

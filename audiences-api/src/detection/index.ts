@@ -19,6 +19,7 @@ import { getCookie } from './attributes/cookie';
 import { getHostname } from './attributes/hostname';
 import { getLocalDate } from './attributes/local_date';
 import { getLocalHour } from './attributes/local_hour';
+import { getPathname } from './attributes/pathname';
 import { getReferrer } from './attributes/referrer';
 import { getSearchParam } from './attributes/search_param';
 import { getUrl } from './attributes/url';
@@ -106,6 +107,8 @@ async function getAttribute(attr: Attribute): Promise<any> {
     return getLocalDate();
   } else if (attr === 'local_hour') {
     return getLocalHour();
+  } else if (attr === 'pathname') {
+    return getPathname();
   } else if (attr === 'referrer') {
     return getReferrer();
   } else if (attr.startsWith(SEARCH_PARAM_PREFIX)) {
