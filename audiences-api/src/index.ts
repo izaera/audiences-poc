@@ -22,10 +22,17 @@ export type Combinator = 'and' | 'or';
 
 export type Retention = 'PAGE' | 'SESSION';
 
-export interface Rule {
+export type Rule = LeafRule | RuleGroup;
+
+export interface LeafRule {
   attr: Attribute;
   op: Operator;
   val: any;
+}
+
+export interface RuleGroup {
+  combinator: Combinator;
+  rules: Rule[];
 }
 
 export type Attribute =

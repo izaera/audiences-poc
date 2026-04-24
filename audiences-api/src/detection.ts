@@ -3,7 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import type { Attribute, Operator, Retention, Rules } from './index';
+import type {
+  Attribute,
+  Combinator,
+  Operator,
+  Retention,
+  Rule,
+  Rules,
+} from './index';
 import { store } from './store';
 
 export interface SegmentMatch {
@@ -24,17 +31,7 @@ export class Detection {
     for (const segment of this._rules.segments) {
       const { combinator, id, retention, rules } = segment;
 
-      const results = await Promise.all(
-        rules.map(async (rule) => {
-          const attribute = await getAttribute(rule.attr);
-          const operator = getOperator(rule.op);
-
-          return operator(attribute, rule.val);
-        }),
-      );
-
-      const matched =
-        combinator === 'and' ? results.every(Boolean) : results.some(Boolean);
+      const matched = await evaluateGroup(combinator, rules);
 
       if (matched) {
         console.log(`Matched ${retention} segment: ${id}`);
@@ -47,6 +44,26 @@ export class Detection {
 
     return Object.values(matches);
   }
+}
+
+async function evaluateGroup(
+  combinator: Combinator,
+  rules: Rule[],
+): Promise<boolean> {
+  const results = await Promise.all(rules.map(evaluateRule));
+
+  return combinator === 'and' ? results.every(Boolean) : results.some(Boolean);
+}
+
+async function evaluateRule(rule: Rule): Promise<boolean> {
+  if ('combinator' in rule) {
+    return evaluateGroup(rule.combinator, rule.rules);
+  }
+
+  const attribute = await getAttribute(rule.attr);
+  const operator = getOperator(rule.op);
+
+  return operator(attribute, rule.val);
 }
 
 interface OperatorImpl {
