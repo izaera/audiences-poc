@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { UAParser } from 'ua-parser-js';
-
 import type {
   Attribute,
   Combinator,
@@ -12,15 +10,25 @@ import type {
   Retention,
   Rule,
   Rules,
-} from './index';
-import { store } from './store';
-
-const uaParser = new UAParser(navigator.userAgent);
+} from '../index';
+import { getAudiences } from './attributes/audiences';
+import { getBrowserLanguage } from './attributes/browser_language';
+import { getBrowserName } from './attributes/browser_name';
+import { getBrowserVersion } from './attributes/browser_version';
+import { getCookie } from './attributes/cookie';
+import { getLocalHour } from './attributes/local_hour';
+import { getReferrer } from './attributes/referrer';
 
 export interface SegmentMatch {
   id: string;
   retention: Retention;
 }
+
+interface OperatorImpl {
+  (actual: any, expected: any): boolean;
+}
+
+const COOKIE_PREFIX = 'cookie:';
 
 export class Detection {
   private _rules: Rules;
@@ -71,44 +79,24 @@ async function evaluateRule(rule: Rule): Promise<boolean> {
   return operator(attribute, rule.val);
 }
 
-interface OperatorImpl {
-  (actual: any, expected: any): boolean;
-}
-
 // TODO: implement custom attributes
 async function getAttribute(attr: Attribute): Promise<any> {
-  if (attr.startsWith('cookie:')) {
-    return getCookie(attr.slice('cookie:'.length));
-  }
-
-  switch (attr) {
-    case 'audiences': {
-      return store.getSegmentIds();
-    }
-
-    case 'browser_language': {
-      return navigator.language;
-    }
-
-    case 'browser_name': {
-      return uaParser.getBrowser().name;
-    }
-
-    case 'browser_version': {
-      return uaParser.getBrowser().version;
-    }
-
-    case 'local_hour': {
-      return new Date().getHours();
-    }
-
-    case 'referrer': {
-      return document.referrer;
-    }
-
-    default: {
-      throw new Error(`Unsupported attribute: ${attr}`);
-    }
+  if (attr === 'audiences') {
+    return getAudiences();
+  } else if (attr === 'browser_language') {
+    return getBrowserLanguage();
+  } else if (attr === 'browser_name') {
+    return getBrowserName();
+  } else if (attr === 'browser_version') {
+    return getBrowserVersion();
+  } else if (attr.startsWith(COOKIE_PREFIX)) {
+    return getCookie(attr.slice(COOKIE_PREFIX.length));
+  } else if (attr === 'local_hour') {
+    return getLocalHour();
+  } else if (attr === 'referrer') {
+    return getReferrer();
+  } else {
+    throw new Error(`Unsupported attribute: ${attr}`);
   }
 }
 
@@ -143,18 +131,4 @@ function getOperator(op: Operator): OperatorImpl {
       throw new Error(`Unsupported operator: ${op}`);
     }
   }
-}
-
-function getCookie(name: string): string | undefined {
-  for (const cookie of document.cookie.split('; ')) {
-    const i = cookie.indexOf('=');
-
-    if (i === -1) continue;
-
-    if (cookie.slice(0, i) === name) {
-      return decodeURIComponent(cookie.slice(i + 1));
-    }
-  }
-
-  return undefined;
 }
