@@ -40,6 +40,7 @@ export type Attribute =
   | 'browser_language'
   | 'browser_name'
   | 'browser_version'
+  | `cookie:${string}`
   | 'local_hour'
   | 'referrer';
 export type Operator = 'between' | 'eq' | 'include' | 'matches';

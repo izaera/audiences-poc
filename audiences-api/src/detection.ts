@@ -77,6 +77,10 @@ interface OperatorImpl {
 
 // TODO: implement custom attributes
 async function getAttribute(attr: Attribute): Promise<any> {
+  if (attr.startsWith('cookie:')) {
+    return getCookie(attr.slice('cookie:'.length));
+  }
+
   switch (attr) {
     case 'audiences': {
       return store.getSegmentIds();
@@ -139,4 +143,18 @@ function getOperator(op: Operator): OperatorImpl {
       throw new Error(`Unsupported operator: ${op}`);
     }
   }
+}
+
+function getCookie(name: string): string | undefined {
+  for (const cookie of document.cookie.split('; ')) {
+    const i = cookie.indexOf('=');
+
+    if (i === -1) continue;
+
+    if (cookie.slice(0, i) === name) {
+      return decodeURIComponent(cookie.slice(i + 1));
+    }
+  }
+
+  return undefined;
 }
