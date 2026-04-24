@@ -18,6 +18,10 @@ import { getBrowserVersion } from './attributes/browser_version';
 import { getCookie } from './attributes/cookie';
 import { getLocalHour } from './attributes/local_hour';
 import { getReferrer } from './attributes/referrer';
+import { between } from './operators/between';
+import { eq } from './operators/eq';
+import { include } from './operators/include';
+import { matches } from './operators/matches';
 
 export interface SegmentMatch {
   id: string;
@@ -102,33 +106,15 @@ async function getAttribute(attr: Attribute): Promise<any> {
 
 // TODO: implement custom operators
 function getOperator(op: Operator): OperatorImpl {
-  switch (op) {
-    case 'between': {
-      return (value: number, expected: [number, number]): boolean => {
-        return value >= expected[0] && value <= expected[1];
-      };
-    }
-
-    case 'eq': {
-      return (value: any, expected: any): boolean => {
-        return value === expected;
-      };
-    }
-
-    case 'include': {
-      return (value: Set<string>, expected: string): boolean => {
-        return value.has(expected);
-      };
-    }
-
-    case 'matches': {
-      return (value: string, expected: string): boolean => {
-        return new RegExp(expected).test(value);
-      };
-    }
-
-    default: {
-      throw new Error(`Unsupported operator: ${op}`);
-    }
+  if (op === 'between') {
+    return between;
+  } else if (op === 'eq') {
+    return eq;
+  } else if (op === 'include') {
+    return include;
+  } else if (op === 'matches') {
+    return matches;
+  } else {
+    throw new Error(`Unsupported operator: ${op}`);
   }
 }
