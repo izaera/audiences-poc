@@ -16,5 +16,8 @@
     "prettier": "^3.3.3",
     "serve": "^14.2.4",
     "typescript": "^5.6.0"
+  },
+  "dependencies": {
+    "ua-parser-js": "^2.0.9"
   }
 }

@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import { UAParser } from 'ua-parser-js';
+
 import type {
   Attribute,
   Combinator,
@@ -12,6 +14,8 @@ import type {
   Rules,
 } from './index';
 import { store } from './store';
+
+const uaParser = new UAParser(navigator.userAgent);
 
 export interface SegmentMatch {
   id: string;
@@ -35,6 +39,7 @@ export class Detection {
 
       if (matched) {
         console.log(`Matched ${retention} segment: ${id}`);
+
         matches[id] = {
           id,
           retention,
@@ -79,6 +84,14 @@ async function getAttribute(attr: Attribute): Promise<any> {
 
     case 'browser_language': {
       return navigator.language;
+    }
+
+    case 'browser_name': {
+      return uaParser.getBrowser().name;
+    }
+
+    case 'browser_version': {
+      return uaParser.getBrowser().version;
     }
 
     case 'local_hour': {

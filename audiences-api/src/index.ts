@@ -38,6 +38,8 @@ export interface RuleGroup {
 export type Attribute =
   | 'audiences'
   | 'browser_language'
+  | 'browser_name'
+  | 'browser_version'
   | 'local_hour'
   | 'referrer';
 export type Operator = 'between' | 'eq' | 'include' | 'matches';
