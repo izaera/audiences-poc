@@ -22,12 +22,21 @@ export class Detection {
     const matches = {};
 
     for (const segment of this._rules.segments) {
-      const { id, rule, retention } = segment;
+      const { combinator, id, retention, rules } = segment;
 
-      const attribute = await getAttribute(rule.attr);
-      const operator = getOperator(rule.op);
+      const results = await Promise.all(
+        rules.map(async (rule) => {
+          const attribute = await getAttribute(rule.attr);
+          const operator = getOperator(rule.op);
 
-      if (operator(attribute, rule.val)) {
+          return operator(attribute, rule.val);
+        }),
+      );
+
+      const matched =
+        combinator === 'and' ? results.every(Boolean) : results.some(Boolean);
+
+      if (matched) {
         console.log(`Matched ${retention} segment: ${id}`);
         matches[id] = {
           id,
@@ -44,7 +53,6 @@ interface OperatorImpl {
   (actual: any, expected: any): boolean;
 }
 
-// TODO: meta attribute to infer PAGE segments from SESSION segments
 // TODO: implement custom attributes
 async function getAttribute(attr: Attribute): Promise<any> {
   switch (attr) {

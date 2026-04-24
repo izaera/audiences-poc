@@ -2,32 +2,41 @@
 	"segments": [
 		{
 			"id": "late_night_surfer",
-			"rule": {
-				"attr": "local_hour",
-				"op": "between",
-				"val": [
-					4,
-					5
-				]
-			},
+			"combinator": "and",
+			"rules": [
+				{
+					"attr": "local_hour",
+					"op": "between",
+					"val": [
+						4,
+						5
+					]
+				}
+			],
 			"retention": "SESSION"
 		},
 		{
 			"id": "english_language",
-			"rule": {
-				"attr": "browser_language",
-				"op": "eq",
-				"val": "en-US"
-			},
+			"combinator": "and",
+			"rules": [
+				{
+					"attr": "browser_language",
+					"op": "eq",
+					"val": "en-US"
+				}
+			],
 			"retention": "PAGE"
 		},
 		{
 			"id": "spanish_language",
-			"rule": {
-				"attr": "browser_language",
-				"op": "eq",
-				"val": "es-ES"
-			},
+			"combinator": "and",
+			"rules": [
+				{
+					"attr": "browser_language",
+					"op": "eq",
+					"val": "es-ES"
+				}
+			],
 			"retention": "PAGE"
 		}
 	]

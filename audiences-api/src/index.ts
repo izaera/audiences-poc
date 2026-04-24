@@ -13,9 +13,12 @@ export interface Rules {
 
 export interface Segment {
   id: string;
-  rule: Rule;
+  combinator: Combinator;
+  rules: Rule[];
   retention: Retention;
 }
+
+export type Combinator = 'and' | 'or';
 
 export type Retention = 'PAGE' | 'SESSION';
 
