@@ -5,6 +5,6 @@
 
 import { uaParser } from '../util';
 
-export function getBrowserVersion(): string | undefined {
-  return uaParser.getBrowser().version;
+export function getBrowserVersion(): string {
+  return uaParser.getBrowser().version ?? '';
 }

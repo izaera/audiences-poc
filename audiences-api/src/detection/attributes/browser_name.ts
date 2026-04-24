@@ -5,6 +5,6 @@
 
 import { uaParser } from '../util';
 
-export function getBrowserName(): string | undefined {
-  return uaParser.getBrowser().name;
+export function getBrowserName(): string {
+  return uaParser.getBrowser().name ?? '';
 }
