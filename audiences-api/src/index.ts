@@ -47,7 +47,8 @@ export type Attribute =
   | 'pathname'
   | 'referrer'
   | `search_param:${string}`
-  | 'url';
+  | 'url'
+  | 'user_agent';
 export type Operator = 'between' | 'eq' | 'include' | 'matches';
 
 // Executable API

@@ -23,6 +23,7 @@ import { getPathname } from './attributes/pathname';
 import { getReferrer } from './attributes/referrer';
 import { getSearchParam } from './attributes/search_param';
 import { getUrl } from './attributes/url';
+import { getUserAgent } from './attributes/user_agent';
 import { between } from './operators/between';
 import { eq } from './operators/eq';
 import { include } from './operators/include';
@@ -115,6 +116,8 @@ async function getAttribute(attr: Attribute): Promise<any> {
     return getSearchParam(attr.slice(SEARCH_PARAM_PREFIX.length));
   } else if (attr === 'url') {
     return getUrl();
+  } else if (attr === 'user_agent') {
+    return getUserAgent();
   } else {
     throw new Error(`Unsupported attribute: ${attr}`);
   }
