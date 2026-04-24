@@ -44,7 +44,8 @@ export type Attribute =
   | 'hostname'
   | 'local_date'
   | 'local_hour'
-  | 'referrer';
+  | 'referrer'
+  | `search_param:${string}`;
 export type Operator = 'between' | 'eq' | 'include' | 'matches';
 
 // Executable API

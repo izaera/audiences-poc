@@ -6,3 +6,4 @@
 import { UAParser } from 'ua-parser-js';
 
 export const uaParser = new UAParser(navigator.userAgent);
+export const urlSearchParams = new URLSearchParams(window.location.search);

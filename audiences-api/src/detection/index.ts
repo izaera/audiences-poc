@@ -20,6 +20,7 @@ import { getHostname } from './attributes/hostname';
 import { getLocalDate } from './attributes/local_date';
 import { getLocalHour } from './attributes/local_hour';
 import { getReferrer } from './attributes/referrer';
+import { getSearchParam } from './attributes/search_param';
 import { between } from './operators/between';
 import { eq } from './operators/eq';
 import { include } from './operators/include';
@@ -35,6 +36,7 @@ interface OperatorImpl {
 }
 
 const COOKIE_PREFIX = 'cookie:';
+const SEARCH_PARAM_PREFIX = 'search_param:';
 
 export class Detection {
   private _rules: Rules;
@@ -105,6 +107,8 @@ async function getAttribute(attr: Attribute): Promise<any> {
     return getLocalHour();
   } else if (attr === 'referrer') {
     return getReferrer();
+  } else if (attr.startsWith(SEARCH_PARAM_PREFIX)) {
+    return getSearchParam(attr.slice(SEARCH_PARAM_PREFIX.length));
   } else {
     throw new Error(`Unsupported attribute: ${attr}`);
   }
