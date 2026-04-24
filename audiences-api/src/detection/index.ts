@@ -17,6 +17,7 @@ import { getBrowserName } from './attributes/browser_name';
 import { getBrowserVersion } from './attributes/browser_version';
 import { getCookie } from './attributes/cookie';
 import { getHostname } from './attributes/hostname';
+import { getLocalDate } from './attributes/local_date';
 import { getLocalHour } from './attributes/local_hour';
 import { getReferrer } from './attributes/referrer';
 import { between } from './operators/between';
@@ -98,6 +99,8 @@ async function getAttribute(attr: Attribute): Promise<any> {
     return getCookie(attr.slice(COOKIE_PREFIX.length));
   } else if (attr === 'hostname') {
     return getHostname();
+  } else if (attr === 'local_date') {
+    return getLocalDate();
   } else if (attr === 'local_hour') {
     return getLocalHour();
   } else if (attr === 'referrer') {

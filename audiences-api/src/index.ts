@@ -42,6 +42,7 @@ export type Attribute =
   | 'browser_version'
   | `cookie:${string}`
   | 'hostname'
+  | 'local_date'
   | 'local_hour'
   | 'referrer';
 export type Operator = 'between' | 'eq' | 'include' | 'matches';
