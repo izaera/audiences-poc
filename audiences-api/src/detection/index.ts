@@ -21,6 +21,7 @@ import { getLocalDate } from './attributes/local_date';
 import { getLocalHour } from './attributes/local_hour';
 import { getReferrer } from './attributes/referrer';
 import { getSearchParam } from './attributes/search_param';
+import { getUrl } from './attributes/url';
 import { between } from './operators/between';
 import { eq } from './operators/eq';
 import { include } from './operators/include';
@@ -109,6 +110,8 @@ async function getAttribute(attr: Attribute): Promise<any> {
     return getReferrer();
   } else if (attr.startsWith(SEARCH_PARAM_PREFIX)) {
     return getSearchParam(attr.slice(SEARCH_PARAM_PREFIX.length));
+  } else if (attr === 'url') {
+    return getUrl();
   } else {
     throw new Error(`Unsupported attribute: ${attr}`);
   }
