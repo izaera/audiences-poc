@@ -8,46 +8,10 @@ window.debug = {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// FIND WHAT RULES TO APPLY PHASE
-//
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// We define the page as the first portion in the URL. This is completely at user's will. It is not
-// required by the framework.
-function getSite() {
-  return (
-    document.location.pathname.split('/').filter(Boolean)[0] || 'home-site'
-  );
-}
-
-// We define the page as the second portion in the URL. This is completely at user's will. It is not
-// required by the framework.
-function getPage() {
-  return document.location.pathname.split('/').filter(Boolean)[1] || 'home';
-}
-
-// We retrieve the URLs of the rules.json files from a remote server. This is completely at user's
-// will. The framework doesn't impose any restriction on the origin of the URLs.
-import { ruleURLs } from 'http://localhost:8001/rule-urls.js';
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//
 // APPLY RULES (DETECTION) PHASE
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-console.log(`Current site is '${getSite()}'`);
-console.log(`Current page is '${getPage()}'`);
-
-// We apply rules for site and (site, page). Again, the framework doesn't impose any restriction on
-// what rules to apply.
-for (let key of [`${getSite()}`, `${getSite()}/${getPage()}`]) {
-  const url = ruleURLs[key];
-
-  console.log(`Running detection rules '${url}'...`);
-
-  await segments.runDetection(url);
-}
+await segments.runDetection('http://localhost:8001/rules.json');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -58,6 +22,10 @@ for (let key of [`${getSite()}`, `${getSite()}/${getPage()}`]) {
 console.log(`Registering personalization handlers...`);
 
 segments.on('spanish_language', function showSpanishLanguageHint() {
+  if (document.location.pathname != '/') {
+    return;
+  }
+
   const div = document.getElementById('language-hint');
 
   if (!div) return;
@@ -67,7 +35,14 @@ segments.on('spanish_language', function showSpanishLanguageHint() {
   `;
 });
 
-segments.on('eligible_for_day_offer', function showOfferOfTheDay() {
+segments.on('entered_shopping_site_from_google', function showOfferOfTheDay() {
+  if (
+    document.location.pathname != '/' &&
+    document.location.pathname != '/shopping-site/products'
+  ) {
+    return;
+  }
+
   const div = document.getElementById('shopping-hint');
 
   if (!div) return;
@@ -77,7 +52,11 @@ Limited offer of the day: Pro subscription for half its price (that's 6€) duri
 `;
 });
 
-segments.on('eligible_for_review', function showLeaveReviewPrompt() {
+segments.on('entered_legal_site_from_google', function showLeaveReviewPrompt() {
+  if (!document.location.pathname.startsWith('/legal-site/')) {
+    return;
+  }
+
   const div = document.getElementById('legal-hint');
 
   if (!div) return;
