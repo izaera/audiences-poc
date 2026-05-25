@@ -1,5 +1,5 @@
 {
-	"segments": [
+	"audiences": [
 		{
 			"id": "late_night_surfer",
 			"combinator": "and",
@@ -13,7 +13,7 @@
 					]
 				}
 			],
-			"retention": "SESSION"
+			"retention": "BROWSER"
 		},
 		{
 			"id": "english_language",
@@ -64,7 +64,7 @@
 					]
 				}
 			],
-			"retention": "SESSION"
+			"retention": "BROWSER"
 		},
 		{
 			"id": "entered_shopping_site_from_google",
@@ -81,7 +81,7 @@
 					"val": "/shopping-site/products"
 				}
 			],
-			"retention": "SESSION"
+			"retention": "BROWSER"
 		}
 	]
 }
