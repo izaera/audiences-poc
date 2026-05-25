@@ -1,6 +1,6 @@
-import {personalization} from '@liferay/personalization';
+import {audiences} from '@liferay/frontend-js-audiences-web';
 
-personalization.on(
+audiences.on(
 	'spanish_language',
 	function showSpanishLanguageHint() {
 		const HINT_ID = 'spanish_language_hint';
