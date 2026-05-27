@@ -55,7 +55,7 @@
 				{
 					"attr": "custom:http://localhost:8080/o/liferay-sample-audiences-custom-attributes-1/custom-attributes.9f1591bbef36426c91319ea8ecdf3533b4a1bd31.js#touchDevice",
 					"op": "eq",
-					"val": "false"
+					"val": false
 				}
 			],
 			"retention": "BROWSER"
