@@ -29,7 +29,7 @@
 			"combinator": "and",
 			"rules": [
 				{
-					"attr": "custom:/o/liferay-sample-audiences-custom-attribute-1/custom-attribute.8e116c16717e094e63543de86219d1b304cff54.js",
+					"attr": "custom:http://localhost:8080/o/liferay-sample-audiences-custom-attributes-1/custom-attributes.9f1591bbef36426c91319ea8ecdf3533b4a1bd31.js#timeOfDay",
 					"op": "eq",
 					"val": "morning"
 				}
@@ -41,9 +41,21 @@
 			"combinator": "and",
 			"rules": [
 				{
-					"attr": "custom:/o/liferay-sample-audiences-custom-attribute-1/custom-attribute.8e116c16717e094e63543de86219d1b304cff54.js",
+					"attr": "custom:http://localhost:8080/o/liferay-sample-audiences-custom-attributes-1/custom-attributes.9f1591bbef36426c91319ea8ecdf3533b4a1bd31.js#timeOfDay",
 					"op": "eq",
 					"val": "afternoon"
+				}
+			],
+			"retention": "BROWSER"
+		},
+		{
+			"id": "desktop_user",
+			"combinator": "and",
+			"rules": [
+				{
+					"attr": "custom:http://localhost:8080/o/liferay-sample-audiences-custom-attributes-1/custom-attributes.9f1591bbef36426c91319ea8ecdf3533b4a1bd31.js#touchDevice",
+					"op": "eq",
+					"val": "false"
 				}
 			],
 			"retention": "BROWSER"
