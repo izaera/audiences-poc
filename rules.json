@@ -1,21 +1,6 @@
 {
 	"audiences": [
 		{
-			"id": "late_night_surfer",
-			"combinator": "and",
-			"rules": [
-				{
-					"attr": "local_hour",
-					"op": "between",
-					"val": [
-						4,
-						5
-					]
-				}
-			],
-			"retention": "BROWSER"
-		},
-		{
 			"id": "english_language",
 			"combinator": "and",
 			"rules": [
@@ -40,45 +25,25 @@
 			"retention": "PAGE"
 		},
 		{
-			"id": "entered_legal_site_from_google",
+			"id": "morning_surfer",
 			"combinator": "and",
 			"rules": [
 				{
-					"attr": "referrer",
-					"op": "matches",
-					"val": ".*/external/google.*"
-				},
-				{
-					"combinator": "or",
-					"rules": [
-						{
-							"attr": "pathname",
-							"op": "eq",
-							"val": "/legal-site/about"
-						},
-						{
-							"attr": "pathname",
-							"op": "eq",
-							"val": "/legal-site/contact"
-						}
-					]
+					"attr": "custom:/o/liferay-sample-audiences-custom-attribute-1/custom-attribute.8e116c16717e094e63543de86219d1b304cff54.js",
+					"op": "eq",
+					"val": "morning"
 				}
 			],
 			"retention": "BROWSER"
 		},
 		{
-			"id": "entered_shopping_site_from_google",
+			"id": "afternoon_surfer",
 			"combinator": "and",
 			"rules": [
 				{
-					"attr": "referrer",
-					"op": "matches",
-					"val": ".*/external/google.*"
-				},
-				{
-					"attr": "pathname",
+					"attr": "custom:/o/liferay-sample-audiences-custom-attribute-1/custom-attribute.8e116c16717e094e63543de86219d1b304cff54.js",
 					"op": "eq",
-					"val": "/shopping-site/products"
+					"val": "afternoon"
 				}
 			],
 			"retention": "BROWSER"
