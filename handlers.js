@@ -1,7 +1,9 @@
 import {audiences} from '@liferay/frontend-js-audiences-web';
 
+const SPANISH_LANGUAGE = '35202';
+
 audiences.on(
-	'spanish_language',
+	SPANISH_LANGUAGE,
 	function showSpanishLanguageHint() {
 		const HINT_ID = 'spanish_language_hint';
 
